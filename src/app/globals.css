@@ -1,0 +1,50 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #185FA5;
+  --blue-dk: #0C447C;
+  --blue-md: #378ADD;
+  --blue-bg: #E6F1FB;
+  --teal: #0F6E56;
+  --teal-md: #1D9E75;
+  --teal-bg: #E1F5EE;
+  --teal-dk: #065f46;
+  --amber: #854F0B;
+  --amber-md: #EF9F27;
+  --amber-bg: #FAEEDA;
+  --coral: #993C1D;
+  --coral-md: #D85A30;
+  --coral-bg: #FAECE7;
+  --purple: #534AB7;
+  --purple-bg: #EEEDFE;
+  --surf: #ffffff;
+  --surf2: #F8FAFC;
+  --border: #E2E8F0;
+  --border2: #CBD5E1;
+  --txt: #0F172A;
+  --muted: #64748B;
+  --hint: #94A3B8;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 20px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #EFF3F8;
+  color: var(--txt);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.4); }
+  50%       { transform: scaleY(1); }
+}
