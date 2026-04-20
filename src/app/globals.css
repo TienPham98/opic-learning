@@ -1,50 +1,29 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --blue: #185FA5;
-  --blue-dk: #0C447C;
-  --blue-md: #378ADD;
-  --blue-bg: #E6F1FB;
-  --teal: #0F6E56;
-  --teal-md: #1D9E75;
-  --teal-bg: #E1F5EE;
-  --teal-dk: #065f46;
-  --amber: #854F0B;
-  --amber-md: #EF9F27;
-  --amber-bg: #FAEEDA;
-  --coral: #993C1D;
-  --coral-md: #D85A30;
-  --coral-bg: #FAECE7;
-  --purple: #534AB7;
-  --purple-bg: #EEEDFE;
-  --surf: #ffffff;
-  --surf2: #F8FAFC;
-  --border: #E2E8F0;
-  --border2: #CBD5E1;
-  --txt: #0F172A;
-  --muted: #64748B;
-  --hint: #94A3B8;
-  --r-md: 8px;
-  --r-lg: 12px;
-  --r-xl: 16px;
-  --r-2xl: 20px;
-}
-
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'DM Sans', system-ui, sans-serif;
-  background: #EFF3F8;
-  color: var(--txt);
+  font-family: 'General Sans', system-ui, sans-serif;
+  background: #000;
+  color: #fff;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+::selection { background: rgba(255,255,255,0.2); color: #fff; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+textarea {
+  font-family: 'General Sans', system-ui, sans-serif;
+  font-size: 0.875rem; color: #fff;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px; padding: 12px 14px;
+  resize: vertical; outline: none; width: 100%; line-height: 1.65;
+  transition: border-color .2s;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes wave {
-  0%, 100% { transform: scaleY(0.4); }
-  50%       { transform: scaleY(1); }
-}
+textarea::placeholder { color: rgba(255,255,255,0.35); }
+textarea:focus { border-color: rgba(255,255,255,0.4); }
+@keyframes fadeUp   { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+@keyframes spin     { to{transform:rotate(360deg)} }
+@keyframes wave     { 0%,100%{transform:scaleY(.4)} 50%{transform:scaleY(1)} }
