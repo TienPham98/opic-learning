@@ -5,48 +5,50 @@ export async function POST(req: NextRequest) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) return NextResponse.json({ error: "No key" }, { status: 500 });
 
-  const prompt = `You are an OPIc examiner. Score this student's English answer.
-
-Question: ${question}
-Student answer: ${answer}
-Target level: ${level}
-
-Score 1-10 based on OPIc criteria for ${level}: Task completion, Fluency, Vocabulary, Grammar.
-
-Return ONLY valid JSON (no markdown):
-{
-  "score": 7.5,
-  "estimatedLevel": "IM2",
-  "strengths": ["Trả lời đúng câu hỏi và có chi tiết", "Dùng từ vựng phù hợp"],
-  "improvements": ["Cần thêm ví dụ cụ thể", "Chú ý thì quá khứ"],
-  "overall": "Bài làm khá tốt, đạt mức IM2. Cần phát triển ý nhiều hơn để đạt IH."
-}`;
-
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` },
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
     body: JSON.stringify({
       model: "llama-3.3-70b-versatile",
-      max_tokens: 600,
+      max_tokens: 700,
       temperature: 0.3,
+      response_format: { type: "json_object" },
       messages: [
-        { role: "system", content: "You are an OPIc examiner. Respond with valid JSON only." },
-        { role: "user", content: prompt }
-      ]
-    })
+        {
+          role: "system",
+          content: "You are an OPIc examiner. Respond with valid JSON only.",
+        },
+        {
+          role: "user",
+          content: `Score this OPIc answer.
+Question: ${question}
+Answer: ${answer}
+Target level: ${level}
+
+Return JSON with exactly these fields:
+{
+  "score": <number 1-10, one decimal>,
+  "estimatedLevel": "<IM1|IM2|IM3|IH|AL>",
+  "strengths": ["<Vietnamese strength 1>", "<Vietnamese strength 2>"],
+  "improvements": ["<Vietnamese tip 1>", "<Vietnamese tip 2>"],
+  "overall": "<2-3 sentence Vietnamese summary>"
+}`,
+        },
+      ],
+    }),
   });
 
   if (!res.ok) {
     const err = await res.text();
     return NextResponse.json({ error: err }, { status: res.status });
   }
+
   const data = await res.json();
-  const raw = (data.choices?.[0]?.message?.content || "").replace(/```json|```/g, "").trim();
-  const match = raw.match(/\{[\s\S]*\}/);
-  if (!match) return NextResponse.json({ error: "No JSON" }, { status: 500 });
+  const raw = (data.choices?.[0]?.message?.content ?? "").replace(/```json|```/g, "").trim();
   try {
-    return NextResponse.json(JSON.parse(match[0]));
+    const match = raw.match(/\{[\s\S]*\}/);
+    return NextResponse.json(JSON.parse(match ? match[0] : raw));
   } catch {
-    return NextResponse.json({ error: "Parse failed" }, { status: 500 });
+    return NextResponse.json({ error: "Parse failed", raw }, { status: 500 });
   }
 }

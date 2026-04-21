@@ -3,16 +3,18 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "OPIc Learn — Luyện thi OPIc thông minh",
-  description: "AI-powered OPIc practice. Flashcards, sample answers, and real-time scoring.",
+  description: "Nền tảng luyện thi OPIc với AI: flashcard từ vựng, bài mẫu, chấm điểm tức thì.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi">
       <head>
-        <link rel="preconnect" href="https://api.fontshare.com" />
+        {/* Be Vietnam Pro — Google Fonts, designed for Vietnamese */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
           rel="stylesheet"
         />
       </head>
